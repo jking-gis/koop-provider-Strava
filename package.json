@@ -17,7 +17,7 @@
     "koop": "^3.4.0",
     "request": "^2.79.0"
   },
-  "author": "Daniel Fenton",
+  "author": "Jeff King",
   "license": "Apache-2.0",
   "devDependencies": {
     "nock": "^9.0.2",
@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jking-GIS/Koop-Strava-Provider.git"
+    "url": "git+https://github.com/Jking-GIS/koop-provider-Strava.git"
   },
   "bugs": {
-    "url": "https://github.com/Jking-GIS/Koop-Strava-Provider/issues"
+    "url": "https://github.com/Jking-GIS/koop-provider-Strava/issues"
   },
-  "homepage": "https://github.com/Jking-GIS/Koop-Strava-Provider",
+  "homepage": "https://github.com/Jking-GIS/koop-provider-Strava",
   "keywords": [
     "koop",
     "provider",
