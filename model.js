@@ -54,6 +54,8 @@ Model.prototype.getData = function (req, callback) {
       access_token: accessToken
     }
 
+    console.log('test3')
+
     // Call the remote API with our developer key
     request(requestOptions, (err, res, body) => {
       console.log('test')
