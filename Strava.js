@@ -45,8 +45,8 @@ Strava.prototype.getData = function (req, callback) {
     var normalizedBounds
     console.log(req.query)
     if (req.query.geometry) {
-      normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
-      normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
+      normalizedMin = [0, 0] // webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
+      normalizedMax = [0, 0] // webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
       normalizedBounds = normalizedMin[1] + ',' +
         normalizedMin[0] + ',' +
         normalizedMax[1] + ',' +
