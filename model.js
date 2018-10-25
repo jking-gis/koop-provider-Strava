@@ -43,17 +43,17 @@ Model.prototype.getData = function (req, callback) {
     var accessToken = body.access_token
     var requestOptions = {
       url: 'https://www.strava.com/api/v3/segments/explore',
-      headers: {
-        'activity_type': req.query.activity_type ? req.query.activity_type : 'riding',
-        'min_cat': req.query.min_cat ? req.query.min_cat : 0,
-        'max_cat': req.query.max_cat ? req.query.max_cat : 5,
-        'bounds': req.query.bounds ? req.query.bounds : '38,-91,39,-90',
-        'access_token': accessToken
+      form: {
+        activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
+        min_cat: req.query.min_cat ? req.query.min_cat : 0,
+        max_cat: req.query.max_cat ? req.query.max_cat : 5,
+        bounds: req.query.bounds ? req.query.bounds : '38,-91,39,-90',
+        access_token: accessToken
       }
     }
 
     // Call the remote API with our developer key
-    request(requestOptions, (err, res, body) => {
+    request.get(requestOptions, (err, res, body) => {
       if (err) return callback(err)
 
       /* for (var x = 0; x < body.segments.length; x++) {
