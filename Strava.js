@@ -7,8 +7,6 @@
 */
 const request = require('request').defaults({ gzip: true, json: true })
 const config = require('config')
-const arcgisJsApi = require('arcgis-js-api')
-const webMercatorUtils = arcgisJsApi.esri.geometry.support.webMercatorUtils
 
 function Strava (koop) {}
 
@@ -45,6 +43,7 @@ Strava.prototype.getData = function (req, callback) {
     var normalizedMin
     var normalizedMax
     var normalizedBounds
+    console.log(req.query)
     if (req.query.geometry) {
       normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
       normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
