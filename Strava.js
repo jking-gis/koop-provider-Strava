@@ -59,7 +59,7 @@ Strava.prototype.getData = function (req, callback) {
         activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
         min_cat: req.query.min_cat ? req.query.min_cat : 0,
         max_cat: req.query.max_cat ? req.query.max_cat : 5,
-        bounds: (normalizedBounds === undefined) ? normalizedBounds : '0,0,0,0',
+        bounds: req.query.bounds, // (normalizedBounds === undefined) ? normalizedBounds : '0,0,0,0',
         access_token: accessToken
       }
     }
