@@ -56,15 +56,14 @@ Model.prototype.getData = function (req, callback) {
 
     // Call the remote API with our developer key
     request(requestOptions, (err, res, body) => {
+      console.log('test')
       if (err) return callback(err)
-
+      console.log('test2')
       /* for (var x = 0; x < body.segments.length; x++) {
         body.segments[x].points
       } */
 
       // translate the response into geojson
-      console.log(JSON.stringify(res))
-      console.log(res.segments)
       const geojson = translate(body.segments[0])
       // console.log(JSON.stringify(geojson))
 
