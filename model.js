@@ -40,7 +40,9 @@ Model.prototype.getData = function (req, callback) {
       return
     }
 
+    console.log('test2')
     var accessToken = (JSON.parse(body)).access_token
+    console.log('test3')
     console.log(accessToken)
     var requestOptions = {
       url: 'https://www.strava.com/api/v3/segments/explore',
@@ -51,13 +53,13 @@ Model.prototype.getData = function (req, callback) {
       access_token: accessToken
     }
 
-    console.log('test3')
+    console.log('test4')
 
     // Call the remote API with our developer key
     request(requestOptions, (err, res, body) => {
-      console.log('test')
+      console.log('test5')
       if (err) return callback(err)
-      console.log('test2')
+      console.log('test6')
       /* for (var x = 0; x < body.segments.length; x++) {
         body.segments[x].points
       } */
@@ -77,7 +79,7 @@ Model.prototype.getData = function (req, callback) {
       // }
 
       // hand off the data to Koop
-      // callback(null, geojson)
+      callback(null, geojson)
     })
   })
 }
