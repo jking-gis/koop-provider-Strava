@@ -13,7 +13,7 @@ const provider = {
   name: 'Strava',
   type: 'provider',
   version: require('./package.json').version,
-  Model: require('./model'),
+  Model: require('./Strava'),
   hosts: false, // if true, also adds disableIdParam
   disableIdParam: true, // if true, adds to path and req.params
   routes: require('./routes')
