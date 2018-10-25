@@ -43,6 +43,8 @@ Model.prototype.getData = function (req, callback) {
       return
     }
 
+    console.log('test2')
+    console.log(body)
     var accessToken = (JSON.parse(body)).access_token
     console.log(accessToken)
     var requestOptions = {
