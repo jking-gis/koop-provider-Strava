@@ -44,13 +44,26 @@ Model.prototype.getData = function (req, callback) {
     }
 
     var accessToken = (JSON.parse(body)).access_token
+    console.log(accessToken)
+    var requestOptions = {
+      url: 'https://www.strava.com/api/v3/segments/explore',
+      activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
+      min_cat: req.query.min_cat ? req.query.min_cat : 0,
+      max_cat: req.query.max_cat ? req.query.max_cat : 5,
+      bounds: req.query.bounds ? req.query.bounds : '38,-91,39,-90',
+      access_token: accessToken
+    }
 
     // Call the remote API with our developer key
-    request(`https://developer.trimet.org/ws/v2/vehicles/onRouteOnly/false/appid/${accessToken}`, (err, res, body) => {
+    request(requestOptions, (err, res, body) => {
       if (err) return callback(err)
 
+      /* for (var x = 0; x < body.segments.length; x++) {
+        body.segments[x].points
+      } */
+
       // translate the response into geojson
-      const geojson = translate(body)
+      const geojson = translate(body.segments[0])
 
       // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
       // geojson.ttl = 10
@@ -82,14 +95,14 @@ function formatFeature (inputFeature) {
     properties: inputFeature,
     geometry: {
       type: 'Point',
-      coordinates: [inputFeature.longitude, inputFeature.latitude]
+      coordinates: [inputFeature.start_latlng[0], inputFeature.start_latlng[1]]
     }
   }
   // But we also want to translate a few of the date fields so they are easier to use downstream
-  const dateFields = ['expires', 'serviceDate', 'time']
+  /* const dateFields = ['expires', 'serviceDate', 'time']
   dateFields.forEach(field => {
     feature.properties[field] = new Date(feature.properties[field]).toISOString()
-  })
+  }) */
   return feature
 }
 
