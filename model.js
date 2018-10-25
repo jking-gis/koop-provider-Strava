@@ -26,10 +26,7 @@ Model.prototype.getData = function (req, callback) {
   const clientId = config.Strava.clientId
   const refreshToken = config.Strava.refreshToken
 
-  console.log('req: ' + req)
-  console.log('testing here')
-  console.log(req)
-  console.log('onward')
+  console.log(req.body)
   callback(null, req)
 
   request.post({
