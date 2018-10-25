@@ -40,10 +40,7 @@ Model.prototype.getData = function (req, callback) {
       return
     }
 
-    console.log('test2')
-    var accessToken = (JSON.parse(body)).access_token
-    console.log('test3')
-    console.log(accessToken)
+    var accessToken = body.access_token
     var requestOptions = {
       url: 'https://www.strava.com/api/v3/segments/explore',
       activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
@@ -53,16 +50,16 @@ Model.prototype.getData = function (req, callback) {
       access_token: accessToken
     }
 
-    console.log('test4')
-
     // Call the remote API with our developer key
     request(requestOptions, (err, res, body) => {
-      console.log('test5')
       if (err) return callback(err)
-      console.log('test6')
+
       /* for (var x = 0; x < body.segments.length; x++) {
         body.segments[x].points
       } */
+
+      console.log(res)
+      console.log(body)
 
       // translate the response into geojson
       const geojson = translate(body.segments[0])
