@@ -63,6 +63,8 @@ Model.prototype.getData = function (req, callback) {
       } */
 
       // translate the response into geojson
+      console.log(body)
+      console.log(res)
       const geojson = translate(body.segments[0])
       console.log(geojson)
 
