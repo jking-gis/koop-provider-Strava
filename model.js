@@ -63,10 +63,10 @@ Model.prototype.getData = function (req, callback) {
       } */
 
       // translate the response into geojson
-      console.log(JSON.stringify(body))
       console.log(JSON.stringify(res))
+      console.log(res.segments)
       const geojson = translate(body.segments[0])
-      console.log(JSON.stringify(geojson))
+      // console.log(JSON.stringify(geojson))
 
       // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
       // geojson.ttl = 10
