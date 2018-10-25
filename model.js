@@ -77,7 +77,7 @@ Model.prototype.getData = function (req, callback) {
       // }
 
       // hand off the data to Koop
-      callback(null, geojson)
+      // callback(null, geojson)
     })
   })
 }
