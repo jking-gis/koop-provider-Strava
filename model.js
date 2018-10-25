@@ -93,8 +93,8 @@ function formatFeature (inputFeature) {
     type: 'Feature',
     properties: inputFeature,
     geometry: {
-      type: 'Point',
-      coordinates: [inputFeature.start_latlng[1], inputFeature.start_latlng[0]]
+      type: 'LineString',
+      coordinates: decodePoly(inputFeature.points)
     }
   }
   // But we also want to translate a few of the date fields so they are easier to use downstream
