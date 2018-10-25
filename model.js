@@ -94,7 +94,7 @@ function formatFeature (inputFeature) {
     properties: inputFeature,
     geometry: {
       type: 'Point',
-      coordinates: [inputFeature.start_latlng[0], inputFeature.start_latlng[1]]
+      coordinates: [inputFeature.start_latlng[1], inputFeature.start_latlng[0]]
     }
   }
   // But we also want to translate a few of the date fields so they are easier to use downstream
