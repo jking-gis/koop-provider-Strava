@@ -22,27 +22,49 @@ function Model (koop) {}
 // req.params.layer
 // req.params.method
 Model.prototype.getData = function (req, callback) {
-  const key = config.trimet.key
+  const clientSecret = config.Strava.clientSecret
+  const clientId = config.Strava.clientId
+  const refreshToken = config.Strava.refreshToken
 
-  // Call the remote API with our developer key
-  request(`https://developer.trimet.org/ws/v2/vehicles/onRouteOnly/false/appid/${key}`, (err, res, body) => {
-    if (err) return callback(err)
+  console.log('req: ' + req)
+  callback(null, req)
 
-    // translate the response into geojson
-    const geojson = translate(body)
+  request.post({
+    url: 'https://www.strava.com/oauth/token',
+    form: {
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: clientId,
+      client_secret: clientSecret
+    }
+  }, function (err, httpResponse, body) {
+    if (err) {
+      console.log('request failed: ' + err)
+      return
+    }
 
-    // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
-    // geojson.ttl = 10
+    var accessToken = (JSON.parse(body)).access_token
 
-    // Optional: Service metadata and geometry type
-    // geojson.metadata = {
-    //   title: 'Koop Sample Provider',
-    //   description: `Generated from ${url}`,
-    //   geometryType: 'Polygon' // Default is automatic detection in Koop
-    // }
+    // Call the remote API with our developer key
+    request(`https://developer.trimet.org/ws/v2/vehicles/onRouteOnly/false/appid/${accessToken}`, (err, res, body) => {
+      if (err) return callback(err)
 
-    // hand off the data to Koop
-    callback(null, geojson)
+      // translate the response into geojson
+      const geojson = translate(body)
+
+      // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
+      // geojson.ttl = 10
+
+      // Optional: Service metadata and geometry type
+      // geojson.metadata = {
+      //   title: 'Koop Sample Provider',
+      //   description: `Generated from ${url}`,
+      //   geometryType: 'Polygon' // Default is automatic detection in Koop
+      // }
+
+      // hand off the data to Koop
+      callback(null, geojson)
+    })
   })
 }
 
@@ -69,6 +91,64 @@ function formatFeature (inputFeature) {
     feature.properties[field] = new Date(feature.properties[field]).toISOString()
   })
   return feature
+}
+
+function decodePoly (encodedString) {
+  var codeChunks = []
+  var codeChunk = []
+  var coord = []
+
+  var i; var x = 0; var y = 0
+  for (i = 0; i < encodedString.length; i++) {
+    codeChunk[x] = encodedString.charCodeAt(i) - 63
+    if ((codeChunk[x] & 0x20) === 0x0) {
+      codeChunk = codeChunk.reverse()
+      var j; var codeChunkString = ''
+
+      var zerosToAdd = 8 - ((codeChunk.length * 5) % 8)
+      for (j = 0; j < zerosToAdd; j++) {
+        codeChunkString = codeChunkString + '0'
+      }
+
+      for (j = 0; j < codeChunk.length; j++) {
+        codeChunk[j] = codeChunk[j].toString(2)
+        codeChunk[j] = '00000'.substr(codeChunk[j].length) + codeChunk[j]
+        codeChunkString = codeChunkString + codeChunk[j]
+      }
+
+      var codeChunkBin = parseInt(codeChunkString, 2)
+      if (codeChunkBin & 0x1) {
+        codeChunkBin = ~(codeChunkBin >> 1)
+        codeChunkBin = codeChunkBin - 0x1
+        codeChunkBin = ~(codeChunkBin >> 1)
+        codeChunkBin = codeChunkBin * -1
+        codeChunkBin = codeChunkBin << 1
+      } else {
+        codeChunkBin = codeChunkBin >> 1
+      }
+
+      codeChunkBin = codeChunkBin / 100000
+      coord[y % 2] = codeChunkBin
+
+      if ((y % 2) === 1) {
+        codeChunks[Math.floor(y / 2)] = coord.reverse()
+        if (y > 1) {
+          codeChunks[Math.floor(y / 2)][0] = codeChunks[Math.floor(y / 2)][0] + codeChunks[Math.floor(y / 2) - 1][0]
+          codeChunks[Math.floor(y / 2)][1] = codeChunks[Math.floor(y / 2)][1] + codeChunks[Math.floor(y / 2) - 1][1]
+        }
+        coord = []
+      }
+
+      y++
+      x = 0
+      codeChunk = []
+    } else {
+      codeChunk[x] = codeChunk[x] & 0x1F
+      x++
+    }
+  }
+
+  return codeChunks
 }
 
 module.exports = Model

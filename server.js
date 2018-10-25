@@ -6,6 +6,8 @@ process.on('SIGTERM', () => process.exit(0))
 const Koop = require('koop')
 const koop = new Koop()
 
+console.log(koop)
+
 // Install the Sample Provider
 const provider = require('./')
 koop.register(provider)

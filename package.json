@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "config": "^1.25.1",
-    "koop": "^3.4.0",
+    "koop": "^3.10.0",
     "request": "^2.79.0"
   },
   "author": "Jeff King",
