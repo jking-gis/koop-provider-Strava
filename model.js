@@ -60,11 +60,8 @@ Model.prototype.getData = function (req, callback) {
         body.segments[x].points
       } */
 
-      console.log(res)
-      console.log(body)
-
       // translate the response into geojson
-      const geojson = translate(body.segments[0])
+      const geojson = translate(body.segments)
       console.log(JSON.stringify(geojson))
 
       // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
@@ -86,7 +83,7 @@ Model.prototype.getData = function (req, callback) {
 function translate (input) {
   return {
     type: 'FeatureCollection',
-    features: input.resultSet.vehicle.map(formatFeature)
+    features: input[0].map(formatFeature)
   }
 }
 
