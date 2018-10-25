@@ -26,9 +26,6 @@ Model.prototype.getData = function (req, callback) {
   const clientId = config.Strava.clientId
   const refreshToken = config.Strava.refreshToken
 
-  console.log(req.query.bounds)
-  callback(null, req)
-
   request.post({
     url: 'https://www.strava.com/oauth/token',
     form: {
@@ -43,8 +40,6 @@ Model.prototype.getData = function (req, callback) {
       return
     }
 
-    console.log('test2')
-    console.log(body)
     var accessToken = (JSON.parse(body)).access_token
     console.log(accessToken)
     var requestOptions = {
@@ -68,8 +63,8 @@ Model.prototype.getData = function (req, callback) {
       } */
 
       // translate the response into geojson
-      // const geojson = translate(body.segments[0])
-      // console.log(JSON.stringify(geojson))
+      const geojson = translate(body.segments[0])
+      console.log(JSON.stringify(geojson))
 
       // Optional: cache data for 10 seconds at a time by setting the ttl or "Time to Live"
       // geojson.ttl = 10
@@ -82,7 +77,7 @@ Model.prototype.getData = function (req, callback) {
       // }
 
       // hand off the data to Koop
-      // callback(null, geojson)
+      callback(null, geojson)
     })
   })
 }
