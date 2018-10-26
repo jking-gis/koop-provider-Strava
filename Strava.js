@@ -55,8 +55,9 @@ Strava.prototype.getData = function (req, callback) {
     }
 
     var accessToken = body.access_token
+    var url = 'https://www.strava.com/api/v3/segments/explore'
     var requestOptions = {
-      url: 'https://www.strava.com/api/v3/segments/explore',
+      url: url,
       form: {
         activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
         min_cat: req.query.min_cat ? req.query.min_cat : 0,
@@ -77,11 +78,14 @@ Strava.prototype.getData = function (req, callback) {
       // geojson.ttl = 10
 
       // Optional: Service metadata and geometry type
-      // geojson.metadata = {
-      //   title: 'Koop Sample Provider',
-      //   description: `Generated from ${url}`,
-      //   geometryType: 'Polygon' // Default is automatic detection in Koop
-      // }
+      geojson.metadata = {
+        title: 'Koop Strava Provider',
+        description: `Generated from ${url}`,
+        displayField: 'name',
+        idField: 'id',
+        maxRecordCount: 100,
+        geometryType: 'LineString' // Default is automatic detection in Koop
+      }
 
       // hand off the data to Koop
       callback(null, geojson)
@@ -106,11 +110,6 @@ function formatFeature (inputFeature) {
       coordinates: decodePoly(inputFeature.points)
     }
   }
-  // But we also want to translate a few of the date fields so they are easier to use downstream
-  /* const dateFields = ['expires', 'serviceDate', 'time']
-  dateFields.forEach(field => {
-    feature.properties[field] = new Date(feature.properties[field]).toISOString()
-  }) */
   return feature
 }
 
