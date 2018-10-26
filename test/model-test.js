@@ -11,8 +11,9 @@ const model = new Model()
 const nock = require('nock')
 
 test('should properly fetch from the API and translate features', t => {
-  nock('https://www.strava.com/api/v3')
-    .get('/segments/explore')
+  nock('https://www.strava.com')
+    .post('/oauth/token')
+    .get('/api/v3/segments/explore')
     .reply(200, require('./fixtures/input.json'))
 
   model.getData({}, (err, geojson) => {
