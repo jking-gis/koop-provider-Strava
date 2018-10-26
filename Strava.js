@@ -7,8 +7,7 @@
 */
 const request = require('request').defaults({ gzip: true, json: true })
 const config = require('config')
-const arcgisJsApi = require('arcgis-js-api')
-const webMercatorUtils = arcgisJsApi.esri.geometry.webMercatorUtils
+const webMercatorUtils = require('esri/geometry/webMercatorUtils')
 
 function Strava (koop) {}
 
