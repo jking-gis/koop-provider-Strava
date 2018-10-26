@@ -80,6 +80,7 @@ Strava.prototype.getData = function (req, callback) {
       // Optional: Service metadata and geometry type
       geojson.metadata = {
         title: 'Koop Strava Provider',
+        name: 'Strava segments',
         description: `Generated from ${url}`,
         displayField: 'name',
         idField: 'id',
