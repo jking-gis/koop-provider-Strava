@@ -45,8 +45,7 @@ Strava.prototype.getData = function (req, callback) {
     var normalizedMin
     var normalizedMax
     var normalizedBounds
-    console.log(req)
-    if (req.query.geometry) {
+    if (req && req.query.geometry) {
       normalizedMin = terraformer.Tools.positionToGeographic([req.query.geometry.xmin, req.query.geometry.ymin])
       normalizedMax = terraformer.Tools.positionToGeographic([req.query.geometry.xmax, req.query.geometry.ymax])
       normalizedBounds = normalizedMin[1] + ',' +
@@ -60,9 +59,9 @@ Strava.prototype.getData = function (req, callback) {
     var requestOptions = {
       url: url,
       form: {
-        activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
-        min_cat: req.query.min_cat ? req.query.min_cat : 0,
-        max_cat: req.query.max_cat ? req.query.max_cat : 5,
+        activity_type: (req && req.query.activity_type) ? req.query.activity_type : 'riding',
+        min_cat: (req && req.query.min_cat) ? req.query.min_cat : 0,
+        max_cat: (req && req.query.max_cat) ? req.query.max_cat : 5,
         bounds: (typeof normalizedBounds !== 'undefined') ? normalizedBounds : initialExtent,
         access_token: accessToken
       }
