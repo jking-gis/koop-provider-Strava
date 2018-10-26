@@ -7,6 +7,7 @@
 */
 const request = require('request').defaults({ gzip: true, json: true })
 const config = require('config')
+const webMercatorUtils = require('esri/geometry/webMercatorUtils')
 
 function Strava (koop) {}
 
@@ -40,18 +41,16 @@ Strava.prototype.getData = function (req, callback) {
       return
     }
 
-    var normalizedMin
-    var normalizedMax
-    var normalizedBounds
-    console.log(req.query)
+    var normalizedMin = [0, 0]
+    var normalizedMax = [0, 0]
     if (req.query.geometry) {
-      normalizedMin = [0, 0] // webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
-      normalizedMax = [0, 0] // webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
-      normalizedBounds = normalizedMin[1] + ',' +
-        normalizedMin[0] + ',' +
-        normalizedMax[1] + ',' +
-        normalizedMax[0]
+      normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
+      normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
     }
+    var normalizedBounds = normalizedMin[1] + ',' +
+      normalizedMin[0] + ',' +
+      normalizedMax[1] + ',' +
+      normalizedMax[0]
     var accessToken = body.access_token
     var requestOptions = {
       url: 'https://www.strava.com/api/v3/segments/explore',
@@ -59,7 +58,7 @@ Strava.prototype.getData = function (req, callback) {
         activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
         min_cat: req.query.min_cat ? req.query.min_cat : 0,
         max_cat: req.query.max_cat ? req.query.max_cat : 5,
-        bounds: req.query.bounds, // (normalizedBounds === undefined) ? normalizedBounds : '0,0,0,0',
+        bounds: req.query.bounds ? req.query.bounds : normalizedBounds,
         access_token: accessToken
       }
     }
