@@ -41,6 +41,7 @@ Strava.prototype.getData = function (req, callback) {
       return
     }
 
+    console.log(req.query)
     var polyBounds = new terraformer.Primitive({
       'type': 'Polygon',
       'coordinates': [
