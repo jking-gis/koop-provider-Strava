@@ -26,6 +26,7 @@ Strava.prototype.getData = function (req, callback) {
   const clientSecret = config.Strava.clientSecret
   const clientId = config.Strava.clientId
   const refreshToken = config.Strava.refreshToken
+  console.log(req.query)
 
   request.post({
     url: 'https://www.strava.com/oauth/token',
