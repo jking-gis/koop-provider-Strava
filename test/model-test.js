@@ -6,7 +6,7 @@
 */
 
 const test = require('tape')
-const Model = require('../model')
+const Model = require('../Strava')
 const model = new Model()
 const nock = require('nock')
 
