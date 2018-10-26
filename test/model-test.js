@@ -13,6 +13,9 @@ const nock = require('nock')
 test('should properly fetch from the API and translate features', t => {
   nock('https://www.strava.com')
     .post('/oauth/token')
+    .reply(200, require('./fixtures/auth.json'))
+
+  nock('https://www.strava.com')
     .get('/api/v3/segments/explore')
     .reply(200, require('./fixtures/input.json'))
 
