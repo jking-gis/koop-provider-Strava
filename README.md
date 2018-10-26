@@ -1,77 +1,15 @@
-[![Build Status](https://travis-ci.org/koopjs/koop-provider-sample.svg?branch=master)](https://travis-ci.org/koopjs/koop-provider-sample) [![Greenkeeper badge](https://badges.greenkeeper.io/koopjs/koop-provider-sample.svg)](https://greenkeeper.io/)
+# Koop Strava Provider
 
+This is a provider that looks at Strava's api call to explore nearby segments [here](https://developers.strava.com/docs/reference/#api-Segments-exploreSegments). When put into a webmap, it will use your current extent to define where to search for the segments. You can also use it as a wrapper, and pass the same url parameters as you could in the Strava api call of https://www.strava.com/api/v3/segments/explore. 
 
-# Koop Sample Provider
+The parameters you can pass are bounds, activity_type, min_cat, and max_cat.
 
-This is a sample that demonstrates how to build a Koop Provider. You can clone this project, and use it to start a new provider. This sample can run a local server, deploy to AWS Lambda or Docker for testing and operations. Once the provider is published to NPM, then it can be used with other Koop providers and outputs in a larger project.
+bounds (array[Float]): The latitude and longitude for two points describing a rectangular boundary for the search: [southwest corner latitutde, southwest corner longitude, northeast corner latitude, northeast corner longitude]
 
+activity_type (String): Desired activity type. May take one of the following values: running, riding.
 
-The data source in this example is the [TriMet Bus API](https://developer.trimet.org). You can see this provider in action [here](http://dcdev.maps.arcgis.com/home/item.html?id=2603e7e3f10742f78093edf8ea2adfd8#visualize).
+min_cat (integer): The minimum climbing category.
 
-Full documentation is provided [here](https://koopjs.github.io/docs/specs/provider/).
+max_cat (integer): The maximum climbing category.
 
-## Getting started
-
-1. Open `index.js` and change `provider.name` to a unique name
-1. Open `config/default.json` with any configurable parameters
-1. Open `model.js` and implement `getData` to call your provider and return GeoJSON
-1. Install dependencies `npm install`
-1. Run a local server `npm start`
-1. Add tests to `test/`
-
-## Koop provider file structure
-
-| File | | Description |
-| --- | --- | --- |
-| `index.js` | Mandatory | Configures provider for usage by Koop |
-| `model.js` | Mandatory | Translates remote API to GeoJSON |
-| `routes.js` | Optional | Specifies additional routes to be handled by this provider |
-| `controller.js` | Optional | Handles additional routes specified in `routes.js` |
-| `server.js` | Optional | Reference implementation for the provider |
-| `test/model-test.js` | Optional | tests the `getData` function on the model |
-| `test/fixtures/input.json` | Optional | a sample of the raw input from the 3rd party API |
-| `config/default.json` | Optional | used for advanced configuration, usually API keys. |
-
-
-## Test it out
-Run server:
-- `npm install`
-- `npm start`
-
-Example API Query:
-- `curl localhost:8080/sample/FeatureServer/0/query?returnCountOnly=true`
-
-Tests:
-- `npm test`
-
-### Development output callstack logs
-
-During development you can output error callstack with
-
-- `NODE_ENV=test npm start`
-
-
-## Deploy to AWS Lambda
-
-Koop providers can be quickly deployed and scaled with AWS Lambda. To first create the service:
-
-- `npm run lambda-create`
-
-To deploy code updates
-
-- `npm run lambda-update`
-
-### AWS Lambda configuration
-
-By default, AWS Lambda has a 3 second timeout and only 128MB memory. If your Koop provider uses a slower service, then you should change the AWS Lambda timeout to a higher time limit (e.g. 60 seconds) as well as add more memory (e.g. 512MB).
-
-## With Docker
-
-- `docker build -t koop-provider-sample .`
-- `docker run -it -p 8080:8080 koop-provider-sample`
-
-## Publish to npm
-
-- run `npm init` and update the fields
-  - Choose a name like `koop-provider-foo`
-- run `npm publish`
+Full documentation of the Strava api is provided [here](https://developers.strava.com/docs/reference).
