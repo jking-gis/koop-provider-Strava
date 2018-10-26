@@ -7,7 +7,7 @@
 */
 const request = require('request').defaults({ gzip: true, json: true })
 const config = require('config')
-const webMercatorUtils = require('esri/geometry/webMercatorUtils')
+const terraformer = require('terraformer')
 
 function Strava (koop) {}
 
