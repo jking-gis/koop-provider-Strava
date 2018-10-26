@@ -42,7 +42,7 @@ Strava.prototype.getData = function (req, callback) {
     }
 
     console.log(req)
-    var polyBounds = new terraformer.Primitive({
+    /* var polyBounds = new terraformer.Primitive({
       'type': 'Polygon',
       'coordinates': [
         [ [req.query.geometry.xmin, req.query.geometry.ymin],
@@ -53,14 +53,14 @@ Strava.prototype.getData = function (req, callback) {
     })
     console.log(polyBounds)
     console.log(polyBounds.toGeographic())
-    console.log(polyBounds.toMercator())
+    console.log(polyBounds.toMercator()) */
 
     var normalizedMin = [0, 0]
     var normalizedMax = [0, 0]
-    if (req.query.geometry) {
+    /* if (req.query.geometry) {
       normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
       normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
-    }
+    } */
     var normalizedBounds = normalizedMin[1] + ',' +
       normalizedMin[0] + ',' +
       normalizedMax[1] + ',' +
