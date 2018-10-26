@@ -26,6 +26,7 @@ Strava.prototype.getData = function (req, callback) {
   const clientSecret = config.Strava.clientSecret
   const clientId = config.Strava.clientId
   const refreshToken = config.Strava.refreshToken
+  const initialExtent = config.Strava.initialExtent
 
   request.post({
     url: 'https://www.strava.com/oauth/token',
@@ -41,31 +42,18 @@ Strava.prototype.getData = function (req, callback) {
       return
     }
 
-    var normalizedMin = [-91, 38]
-    var normalizedMax = [-90, 39]
-
+    var normalizedMin
+    var normalizedMax
+    var normalizedBounds
     if (req.query.geometry) {
-      var polyBounds = new terraformer.Primitive({
-        'type': 'Polygon',
-        'coordinates': [
-          [ [req.query.geometry.xmin, req.query.geometry.ymin],
-            [req.query.geometry.xmin, req.query.geometry.ymax],
-            [req.query.geometry.xmax, req.query.geometry.ymax],
-            [req.query.geometry.xmax, req.query.geometry.ymin] ]
-        ]
-      })
-      console.log(JSON.stringify(polyBounds))
-      console.log(JSON.stringify(polyBounds.toGeographic()))
-      console.log(JSON.stringify(polyBounds.toMercator()))
-
-      // normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
-      // normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
+      normalizedMin = terraformer.positionToGeographic([req.query.geometry.xmin, req.query.geometry.ymin])
+      normalizedMax = terraformer.positionToGeographic([req.query.geometry.xmax, req.query.geometry.ymax])
+      normalizedBounds = normalizedMin[1] + ',' +
+        normalizedMin[0] + ',' +
+        normalizedMax[1] + ',' +
+        normalizedMax[0]
     }
 
-    var normalizedBounds = normalizedMin[1] + ',' +
-      normalizedMin[0] + ',' +
-      normalizedMax[1] + ',' +
-      normalizedMax[0]
     var accessToken = body.access_token
     var requestOptions = {
       url: 'https://www.strava.com/api/v3/segments/explore',
@@ -73,7 +61,7 @@ Strava.prototype.getData = function (req, callback) {
         activity_type: req.query.activity_type ? req.query.activity_type : 'riding',
         min_cat: req.query.min_cat ? req.query.min_cat : 0,
         max_cat: req.query.max_cat ? req.query.max_cat : 5,
-        bounds: req.query.bounds ? req.query.bounds : normalizedBounds,
+        bounds: (typeof normalizedBounds !== 'undefined') ? normalizedBounds : initialExtent,
         access_token: accessToken
       }
     }

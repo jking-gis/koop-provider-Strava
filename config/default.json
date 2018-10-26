@@ -2,6 +2,7 @@
   "Strava": {
     "clientId": "29600",
     "clientSecret": "eb3bf8bb62e797e966b51e0f1398ebb81100bb5c",
-    "refreshToken": "e337c56e48391771fbf5bdf7a3c99bd0753f292e"
+    "refreshToken": "e337c56e48391771fbf5bdf7a3c99bd0753f292e",
+    "initialExtent": "38,-91,39,-90"
   }
 }
