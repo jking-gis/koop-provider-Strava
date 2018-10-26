@@ -2,7 +2,7 @@
 
 # Koop Strava Provider
 
-This is a provider that looks at Strava's api call to explore nearby segments [here](https://developers.strava.com/docs/reference/#api-Segments-exploreSegments). When put into a webmap, it will use your current extent to define where to search for the segments. You can also use it as a wrapper, and pass the same url parameters as you could in the Strava api call of https://www.strava.com/api/v3/segments/explore. 
+This is a provider that looks at Strava's api call to explore nearby segments [here](https://developers.strava.com/docs/reference/#api-Segments-exploreSegments). When put into a webmap, it will use your current extent to define where to search for the segments. You can also use it as a wrapper, and pass the same url parameters as you could in the Strava api call of https://www.strava.com/api/v3/segments/explore.
 
 The parameters you can pass are bounds, activity_type, min_cat, and max_cat.
 
