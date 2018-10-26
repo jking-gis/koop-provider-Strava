@@ -45,6 +45,7 @@ Strava.prototype.getData = function (req, callback) {
     var normalizedMin
     var normalizedMax
     var normalizedBounds
+    console.log(req)
     if (req.query.geometry) {
       normalizedMin = terraformer.Tools.positionToGeographic([req.query.geometry.xmin, req.query.geometry.ymin])
       normalizedMax = terraformer.Tools.positionToGeographic([req.query.geometry.xmax, req.query.geometry.ymax])
