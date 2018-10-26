@@ -14,4 +14,16 @@ The parameters you can pass are bounds, activity_type, min_cat, and max_cat.
 
 1. max_cat (integer): The maximum climbing category.
 
+## Test it out
+Run server:
+- `npm install`
+- `npm start`
+
+Example API Query:
+- `curl localhost:8080/Strava/FeatureServer/0/query?bounds=38,-91,39,-90`
+
+Tests:
+
+- `npm test`
+
 Full documentation of the Strava api is provided [here](https://developers.strava.com/docs/reference).
