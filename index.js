@@ -16,7 +16,8 @@ const provider = {
   Model: require('./Strava'),
   hosts: false, // if true, also adds disableIdParam
   disableIdParam: true, // if true, adds to path and req.params
-  routes: require('./routes')
+  routes: require('./routes'),
+  Controller: require('./controller')
 }
 
 module.exports = provider
