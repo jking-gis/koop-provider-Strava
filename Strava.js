@@ -85,18 +85,6 @@ Strava.prototype.getData = function (req, callback) {
         displayField: 'name',
         idField: 'id',
         maxRecordCount: 100,
-        drawingInfo: {
-          renderer: {
-            type: 'simple',
-            symbol: {
-              color: [250, 150, 70, 200],
-              width: 4,
-              type: 'esriSLS',
-              style: 'esriSLSSolid'
-            }
-          },
-          labelingInfo: null
-        },
         geometryType: 'LineString' // Default is automatic detection in Koop
       }
 
