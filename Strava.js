@@ -41,26 +41,27 @@ Strava.prototype.getData = function (req, callback) {
       return
     }
 
-    console.log(req)
-    /* var polyBounds = new terraformer.Primitive({
-      'type': 'Polygon',
-      'coordinates': [
-        [ [req.query.geometry.xmin, req.query.geometry.ymin],
-          [req.query.geometry.xmin, req.query.geometry.ymax],
-          [req.query.geometry.xmax, req.query.geometry.ymax],
-          [req.query.geometry.xmax, req.query.geometry.ymin] ]
-      ]
-    })
-    console.log(polyBounds)
-    console.log(polyBounds.toGeographic())
-    console.log(polyBounds.toMercator()) */
-
     var normalizedMin = [-91, 38]
     var normalizedMax = [-90, 39]
-    /* if (req.query.geometry) {
-      normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
-      normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
-    } */
+
+    if (req.query.geometry) {
+      var polyBounds = new terraformer.Primitive({
+        'type': 'Polygon',
+        'coordinates': [
+          [ [req.query.geometry.xmin, req.query.geometry.ymin],
+            [req.query.geometry.xmin, req.query.geometry.ymax],
+            [req.query.geometry.xmax, req.query.geometry.ymax],
+            [req.query.geometry.xmax, req.query.geometry.ymin] ]
+        ]
+      })
+      console.log(polyBounds)
+      console.log(polyBounds.toGeographic())
+      console.log(polyBounds.toMercator())
+
+      // normalizedMin = webMercatorUtils.xyToLngLat(req.query.geometry.xmin, req.query.geometry.ymin)
+      // normalizedMax = webMercatorUtils.xyToLngLat(req.query.geometry.xmax, req.query.geometry.ymax)
+    }
+
     var normalizedBounds = normalizedMin[1] + ',' +
       normalizedMin[0] + ',' +
       normalizedMax[1] + ',' +
