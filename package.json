@@ -1,6 +1,6 @@
 {
   "name": "koop-provider-strava",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Strava provider for koop",
   "main": "index.js",
   "directories": {
