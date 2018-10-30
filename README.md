@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/koopjs/koop-provider-Strava.svg?branch=master)](https://travis-ci.org/koopjs/koop-provider-Strava) [![Greenkeeper badge](https://badges.greenkeeper.io/koopjs/koop-provider-Strava.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/Jking-GIS/koop-provider-Strava.svg?branch=master)](https://travis-ci.org/Jking-GIS/koop-provider-Strava) [![Greenkeeper badge](https://badges.greenkeeper.io/Jking-GIS/koop-provider-Strava.svg)](https://greenkeeper.io/)
 
 # Koop Strava Provider
 
