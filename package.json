@@ -15,7 +15,8 @@
   "dependencies": {
     "config": "^1.25.1",
     "koop": "^3.10.0",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "terraformer": "^1.0.9"
   },
   "author": "Jeff King",
   "license": "Apache-2.0",
