@@ -1,5 +1,5 @@
 {
-  "name": "koop-provider-Strava",
+  "name": "koop-provider-strava",
   "version": "1.0.0",
   "description": "A Strava provider for koop",
   "main": "index.js",
